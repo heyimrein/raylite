@@ -1,0 +1,8 @@
+[package]
+name = "raylite"
+description = "Lightweight, 0-dependency raycasting"
+authors = ["heyimrein"]
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+keywords = ["raycast", "raycasting", "collision", "2d", "lightweight"]
