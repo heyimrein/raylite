@@ -30,9 +30,8 @@ pub fn cast(ray: &Ray, barrier: &Barrier) -> Result<RayHit, RayFailResult> {
         );
 
         return Ok(RayHit { position: point });
-    } else {
-        return Err(RayFailResult::NoHit);
     }
+    return Err(RayFailResult::NoHit);
 }
 
 /// Cast a Ray for collision detection, with the consideration of several `Barrier`'s.
