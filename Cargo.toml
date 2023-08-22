@@ -5,4 +5,8 @@ authors = ["heyimrein"]
 version = "0.1.0"
 edition = "2021"
 license = "MIT"
+readme = "README.md"
+repository = "https://github.com/heyimrein/raylite"
+maintenance = { status = "actively-developed" }
+categories = ["No standard library", "Collision", ]
 keywords = ["raycast", "raycasting", "collision", "2d", "lightweight"]
