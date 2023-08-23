@@ -1,7 +1,7 @@
 mod utils;
 
 /// Cast a ray for collision detection, with only the consideration of a single `Barrier`.
-pub fn cast(ray: &Ray, barrier: &Barrier) -> Result<RayHit, RayFailResult> {
+pub fn cast(ray: &Ray, barrier: &Barrier) -> Result<RayHit, RayFail> {
     let ray_end = (
         ray.direction.0 * ray.distance + ray.position.0,
         ray.direction.1 * ray.distance + ray.position.1,
@@ -10,7 +10,7 @@ pub fn cast(ray: &Ray, barrier: &Barrier) -> Result<RayHit, RayFailResult> {
     let den = (ray.position.0 - ray_end.0) * (barrier.positions.0 .1 - barrier.positions.1 .1)
         - (ray.position.1 - ray_end.1) * (barrier.positions.0 .0 - barrier.positions.1 .0);
     if den == 0. {
-        return Err(RayFailResult::Parallel);
+        return Err(RayFail::Parallel);
     }
 
     let t_num = (ray.position.0 - barrier.positions.0 .0)
@@ -31,13 +31,13 @@ pub fn cast(ray: &Ray, barrier: &Barrier) -> Result<RayHit, RayFailResult> {
 
         return Ok(RayHit { position: point });
     }
-    return Err(RayFailResult::NoHit);
+    return Err(RayFail::NoHit);
 }
 
 /// Cast a Ray for collision detection, with the consideration of several `Barrier`'s.
 ///
 /// `barriers` must have at least 1 element.
-pub fn cast_wide(ray: &Ray, barriers: &Vec<Barrier>) -> Result<RayHit, RayFailResult> {
+pub fn cast_wide(ray: &Ray, barriers: &Vec<Barrier>) -> Result<RayHit, RayFail> {
     if barriers.len() <= 0 {
         panic!("Barrier array cannot be empty!");
     }
@@ -62,11 +62,11 @@ pub fn cast_wide(ray: &Ray, barriers: &Vec<Barrier>) -> Result<RayHit, RayFailRe
         return Ok(hit.unwrap());
     }
 
-    return Err(RayFailResult::NoHit);
+    return Err(RayFail::NoHit);
 }
 
 /// Raycast failure states.
-pub enum RayFailResult {
+pub enum RayFail {
     /// *Universal*
     /// Did not hit any colliders.
     NoHit,
