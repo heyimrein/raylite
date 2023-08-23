@@ -7,3 +7,10 @@ Lightweight, 0-dependency raycasting in Rust
 
 ## 🚀 Installation
 Install using cargo: `cargo add raylite`
+
+## 📃 Development Todo
+### Urgent
+- Write explanatory docs/quickstart guide
+
+### Maybe?
+- Transfer main workflow to trait usage for extensibility
