@@ -67,32 +67,34 @@ pub fn cast_wide(ray: &Ray, barriers: &Vec<Barrier>) -> Result<RayHit, RayFail> 
 
 /// Raycast failure states.
 pub enum RayFail {
-    /// *Universal*
     /// Did not hit any colliders.
+    ///
+    /// *Universal*
     NoHit,
-    /// *Exclusive to isolated checks* -> `cast()`
     /// Ray and Barrier are parallel; cannot collide.
+    ///
+    /// *Exclusive to isolated checks* -> [cast]
     Parallel,
 }
 
 /// Raycast collision data.
 pub struct RayHit {
-    position: (f32, f32),
+    pub position: (f32, f32),
 }
 
 /// Raycast collision unit, the basis for all raycast collision detection.
 /// Determines the conditions under which collision will be detected.
 pub struct Ray {
     /// Origin position the Ray will emit from.
-    position: (f32, f32),
+    pub position: (f32, f32),
     /// Relative emission direction from origin.
-    direction: (f32, f32),
+    pub direction: (f32, f32),
     /// Maximum emission distance.
-    distance: f32,
+    pub distance: f32,
 }
 
 /// 1-dimensional collision subject; Solid line.
 /// Simplest building block for collider objects.
 pub struct Barrier {
-    positions: ((f32, f32), (f32, f32)),
+    pub positions: ((f32, f32), (f32, f32)),
 }
