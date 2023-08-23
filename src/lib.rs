@@ -1,32 +1,25 @@
 mod utils;
 
 /// Cast a ray for collision detection, with only the consideration of a single [Barrier].
-pub fn cast(ray: &Ray, barrier: &Barrier) -> Result<RayHit, RayFail> {
-    let ray_end = (
-        ray.direction.0 * ray.distance + ray.position.0,
-        ray.direction.1 * ray.distance + ray.position.1,
-    );
-
-    let den = (ray.position.0 - ray_end.0) * (barrier.positions.0 .1 - barrier.positions.1 .1)
-        - (ray.position.1 - ray_end.1) * (barrier.positions.0 .0 - barrier.positions.1 .0);
+pub fn cast(ray: &Ray, bar: &Barrier) -> Result<RayHit, RayFail> {
+    let den = (ray.position.0 - ray.end_position.0) * (bar.positions.0 .1 - bar.positions.1 .1)
+        - (ray.position.1 - ray.end_position.1) * (bar.positions.0 .0 - bar.positions.1 .0);
     if den == 0. {
         return Err(RayFail::Parallel);
     }
 
-    let t_num = (ray.position.0 - barrier.positions.0 .0)
-        * (barrier.positions.0 .1 - barrier.positions.1 .1)
-        - (ray.position.1 - barrier.positions.0 .1)
-            * (barrier.positions.0 .0 - barrier.positions.1 .0);
-    let u_num = (ray.position.0 - barrier.positions.0 .0) * (ray.position.1 - ray_end.1)
-        - (ray.position.1 - barrier.positions.0 .1) * (ray.position.0 - ray_end.0);
+    let t_num = (ray.position.0 - bar.positions.0 .0) * (bar.positions.0 .1 - bar.positions.1 .1)
+        - (ray.position.1 - bar.positions.0 .1) * (bar.positions.0 .0 - bar.positions.1 .0);
+    let u_num = (ray.position.0 - bar.positions.0 .0) * (ray.position.1 - ray.end_position.1)
+        - (ray.position.1 - bar.positions.0 .1) * (ray.position.0 - ray.end_position.0);
 
     let t = t_num / den;
     let u = u_num / den;
 
     if (t >= 0. && t <= 1.) && (u >= 0. && u <= 1.) {
         let point = (
-            ray.position.0 + t * (ray_end.0 - ray.position.0),
-            ray.position.1 + t * (ray_end.1 - ray.position.1),
+            ray.position.0 + t * (ray.end_position.0 - ray.position.0),
+            ray.position.1 + t * (ray.end_position.1 - ray.position.1),
         );
 
         return Ok(RayHit { position: point });
@@ -36,15 +29,18 @@ pub fn cast(ray: &Ray, barrier: &Barrier) -> Result<RayHit, RayFail> {
 
 /// Cast a Ray for collision detection, with the consideration of several [Barrier]'s.
 ///
-/// `barriers` must have at least 1 element.
-pub fn cast_wide(ray: &Ray, barriers: &Vec<Barrier>) -> Result<RayHit, RayFail> {
-    if barriers.len() <= 0 {
-        panic!("Barrier array cannot be empty!");
+/// `bars` must have at least 1 element.
+///
+/// The (possibly) returned hit information will represent the closest barrier to `ray`'s
+/// origin point that was hit.
+pub fn cast_wide(ray: &Ray, bars: &Vec<Barrier>) -> Result<RayHit, RayFail> {
+    if bars.len() <= 0 {
+        panic!("Barrier vector cannot be empty!");
     }
 
     let mut min_dist: Option<f32> = None;
     let mut hit: Option<RayHit> = None;
-    for bar in barriers {
+    for bar in bars {
         let new_hit: Option<RayHit>;
         match cast(ray, bar) {
             Ok(v) => new_hit = Some(v),
@@ -88,10 +84,20 @@ pub struct RayHit {
 pub struct Ray {
     /// Origin position the Ray will emit from.
     pub position: (f32, f32),
-    /// Relative emission direction from origin.
-    pub direction: (f32, f32),
-    /// Maximum emission distance.
-    pub distance: f32,
+    /// Position representing the end of the Ray.
+    pub end_position: (f32, f32),
+}
+
+impl Ray {
+    /// Impl. wrapper for [cast]
+    pub fn cast(self: &Self, bar: &Barrier) {
+        let _ = cast(self, bar);
+    }
+
+    /// Impl. wrapper for [cast_wide]
+    pub fn cast_wide(self: &Self, bars: &Vec<Barrier>) {
+        let _ = cast_wide(self, bars);
+    }
 }
 
 /// 1-dimensional collision subject; Solid line.
