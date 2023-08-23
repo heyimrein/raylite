@@ -18,7 +18,7 @@ pub fn cast(ray: &Ray, barrier: &Barrier) -> Result<RayHit, RayFail> {
         - (ray.position.1 - barrier.positions.0 .1)
             * (barrier.positions.0 .0 - barrier.positions.1 .0);
     let u_num = (ray.position.0 - barrier.positions.0 .0) * (ray.position.1 - ray_end.1)
-        - (ray.position.1 - barrier.positions.0 .1) * (ray.position.0 - ray_end.1);
+        - (ray.position.1 - barrier.positions.0 .1) * (ray.position.0 - ray_end.0);
 
     let t = t_num / den;
     let u = u_num / den;
@@ -84,6 +84,7 @@ pub struct RayHit {
 
 /// Raycast collision unit, the basis for all raycast collision detection.
 /// Determines the conditions under which collision will be detected.
+#[derive(Debug)]
 pub struct Ray {
     /// Origin position the Ray will emit from.
     pub position: (f32, f32),
@@ -95,6 +96,7 @@ pub struct Ray {
 
 /// 1-dimensional collision subject; Solid line.
 /// Simplest building block for collider objects.
+#[derive(Debug)]
 pub struct Barrier {
     pub positions: ((f32, f32), (f32, f32)),
 }
