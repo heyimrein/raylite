@@ -1,6 +1,6 @@
 mod utils;
 
-/// Cast a ray for collision detection, with only the consideration of a single `Barrier`.
+/// Cast a ray for collision detection, with only the consideration of a single [Barrier].
 pub fn cast(ray: &Ray, barrier: &Barrier) -> Result<RayHit, RayFail> {
     let ray_end = (
         ray.direction.0 * ray.distance + ray.position.0,
@@ -34,7 +34,7 @@ pub fn cast(ray: &Ray, barrier: &Barrier) -> Result<RayHit, RayFail> {
     return Err(RayFail::NoHit);
 }
 
-/// Cast a Ray for collision detection, with the consideration of several `Barrier`'s.
+/// Cast a Ray for collision detection, with the consideration of several [Barrier]'s.
 ///
 /// `barriers` must have at least 1 element.
 pub fn cast_wide(ray: &Ray, barriers: &Vec<Barrier>) -> Result<RayHit, RayFail> {
