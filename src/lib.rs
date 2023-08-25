@@ -88,18 +88,6 @@ pub struct Ray {
     pub end_position: (f32, f32),
 }
 
-impl Ray {
-    /// Impl. wrapper for [cast]
-    pub fn cast(self: &Self, bar: &Barrier) {
-        let _ = cast(self, bar);
-    }
-
-    /// Impl. wrapper for [cast_wide]
-    pub fn cast_wide(self: &Self, bars: &Vec<Barrier>) {
-        let _ = cast_wide(self, bars);
-    }
-}
-
 /// 1-dimensional collision subject; Solid line.
 /// Simplest building block for collider objects.
 #[derive(Debug)]
