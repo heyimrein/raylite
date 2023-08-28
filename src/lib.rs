@@ -1,3 +1,5 @@
+use utils::distance;
+
 mod utils;
 
 /// Cast a ray for collision detection, with only the consideration of a single [Barrier].
@@ -22,7 +24,10 @@ pub fn cast(ray: &Ray, bar: &Barrier) -> Result<RayHit, RayFail> {
             ray.position.1 + t * (ray.end_position.1 - ray.position.1),
         );
 
-        return Ok(RayHit { position: point });
+        return Ok(RayHit {
+            position: point,
+            distance: distance(ray.position, point),
+        });
     }
     return Err(RayFail::NoHit);
 }
@@ -75,12 +80,15 @@ pub enum RayFail {
 
 /// Raycast collision data.
 pub struct RayHit {
+    /// Position of collision point.
     pub position: (f32, f32),
+    /// Distance of collision point from Ray emission origin.
+    pub distance: f32,
 }
 
 /// Raycast collision unit, the basis for all raycast collision detection.
 /// Determines the conditions under which collision will be detected.
-#[derive(Debug)]
+#[derive(Debug, Clone, Copy)]
 pub struct Ray {
     /// Origin position the Ray will emit from.
     pub position: (f32, f32),
@@ -90,7 +98,7 @@ pub struct Ray {
 
 /// 1-dimensional collision subject; Solid line.
 /// Simplest building block for collider objects.
-#[derive(Debug)]
+#[derive(Debug, Clone, Copy)]
 pub struct Barrier {
     pub positions: ((f32, f32), (f32, f32)),
 }
