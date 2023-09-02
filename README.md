@@ -1,15 +1,19 @@
 # raylite
+
 Lightweight, 0-dependency raycasting in Rust
 
-🔧**WIP: *Very* early in development, feel free to post issues/contribute!**
+🔧**WIP: _Very_ early in development, feel free to post issues/contribute!**
 
 [Crates.io](https://crates.io/crates/raylite/)
 
 ## 🚀 Installation
+
 Install using cargo: `cargo add raylite`
 
 ## 🪶 Example
-__main.rs:__
+
+**main.rs:**
+
 ```rust
 use raylite::{cast, Barrier, Ray};
 
@@ -35,11 +39,15 @@ fn main() {
     assert!(result.is_err()); // Result is an Err<RayFail::NoHit>
 }
 ```
+
 `cast_wide()` provides the same functionality as `cast()`, but requires you to provide a `&Vec<Barrier>` for batching purposes.
 
 ## 📃 Development Todo
+
 ### Urgent
+
 - Optimize `cast_wide()`
 
 ### Maybe?
+
 - Transfer main workflow to trait usage for extensibility
