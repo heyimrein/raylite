@@ -35,7 +35,7 @@ fn main() {
     assert!(result.is_err()); // Result is an Err<RayFail::NoHit>
 }
 ```
-`cast_wide()` provides the same functionality as `cast()`, but requires you to provide a `Vec<Barrier>` for batching purposes.
+`cast_wide()` provides the same functionality as `cast()`, but requires you to provide a `&Vec<Barrier>` for batching purposes.
 
 ## 📃 Development Todo
 ### Urgent
