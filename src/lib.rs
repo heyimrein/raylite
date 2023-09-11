@@ -43,19 +43,16 @@ pub fn cast_wide(ray: &Ray, bars: &Vec<Barrier>) -> Result<RayHit, RayFail> {
         panic!("Barrier vector cannot be empty!");
     }
 
-    let mut min_dist: Option<f32> = None;
+    let mut ray_clone = ray.to_owned();
+
     let mut hit: Option<RayHit> = None;
     for bar in bars {
-        let new_hit: Option<RayHit>;
-        match cast(ray, bar) {
-            Ok(v) => new_hit = Some(v),
+        match cast(&ray_clone, bar) {
+            Ok(v) => {
+                ray_clone.end_position = v.position;
+                hit = Some(v);
+            }
             Err(_) => continue,
-        }
-
-        let dist = utils::distance(new_hit.as_ref().unwrap().position, ray.position);
-        if min_dist.is_none() || dist < min_dist.unwrap() {
-            min_dist = Some(dist);
-            hit = new_hit;
         }
     }
 
