@@ -41,13 +41,3 @@ fn main() {
 ```
 
 `cast_wide()` provides the same functionality as `cast()`, but requires you to provide a `&Vec<Barrier>` for batching purposes.
-
-## 📃 Development Todo
-
-### Urgent
-
-- Optimize `cast_wide()`
-
-### Maybe?
-
-- Transfer main workflow to trait usage for extensibility
