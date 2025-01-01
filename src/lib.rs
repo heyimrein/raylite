@@ -38,7 +38,7 @@ pub fn cast(ray: &Ray, bar: &Barrier) -> Result<RayHit, RayFail> {
 ///
 /// The (possibly) returned hit information will represent the closest barrier to `ray`'s
 /// origin point that was hit.
-pub fn cast_wide(ray: &Ray, bars: &Vec<Barrier>) -> Result<RayHit, RayFail> {
+pub fn cast_wide(ray: &Ray, bars: &[Barrier]) -> Result<RayHit, RayFail> {
     if bars.len() <= 0 {
         panic!("Barrier vector cannot be empty!");
     }
