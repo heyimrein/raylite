@@ -10,3 +10,8 @@ repository = "https://github.com/heyimrein/raylite"
 maintenance = { status = "actively-developed" }
 categories = ["No standard library", "Collision", ]
 keywords = ["raycast", "raycasting", "collision", "2d", "lightweight"]
+
+[features]
+default = []
+no_std = []
+

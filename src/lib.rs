@@ -1,3 +1,5 @@
+#![cfg_attr(feature = "no_std", no_std)]
+
 use utils::distance;
 
 mod utils;
@@ -43,7 +45,7 @@ pub fn cast_wide(ray: &Ray, bars: &[Barrier]) -> Result<RayHit, RayFail> {
         panic!("Barrier vector cannot be empty!");
     }
 
-    let mut ray_clone = ray.to_owned();
+    let mut ray_clone = ray.clone();
 
     let mut hit: Option<RayHit> = None;
     for bar in bars {
