@@ -40,4 +40,4 @@ fn main() {
 }
 ```
 
-`cast_wide()` provides the same functionality as `cast()`, but requires you to provide a `&Vec<Barrier>` for batching purposes.
+`cast_wide()` provides the same functionality as `cast()`, but requires you to provide a `&[Barrier]` for batching purposes.
